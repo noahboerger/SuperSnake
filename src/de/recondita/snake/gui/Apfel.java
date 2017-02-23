@@ -1,4 +1,4 @@
-package de.bundesbank.snake.gui;
+package de.recondita.snake.gui;
 
 import java.util.ArrayList;
 
@@ -32,31 +32,31 @@ public class Apfel extends ImageView {
 		if (wert < 700) {
 			wert = 1;
 			typ = 1;
-			setImage(new Image("de/bundesbank/snake/gui/apfel.png"));
+			setImage(new Image("de/recondita/snake/gui/apfel.png"));
 		} else if (wert < 720) {
 			wert = -1;
 			typ = 1;
-			setImage(new Image("de/bundesbank/snake/gui/kuchen.png"));
+			setImage(new Image("de/recondita/snake/gui/kuchen.png"));
 		} else if (wert < 780) {
 			wert = 3;
 			typ = 2;
-			setImage(new Image("de/bundesbank/snake/gui/bier.gif"));
+			setImage(new Image("de/recondita/snake/gui/bier.gif"));
 		} else if (wert < 810) {
 			wert = 0;
 			typ = 3;
-			setImage(new Image("de/bundesbank/snake/gui/geschenk.png"));
+			setImage(new Image("de/recondita/snake/gui/geschenk.png"));
 		} else if (wert < 850) {
 			wert = 0;
 			typ = 4;
-			setImage(new Image("de/bundesbank/snake/gui/pille.png"));
+			setImage(new Image("de/recondita/snake/gui/pille.png"));
 		} else if (wert < 900) {
 			wert = 0;
 			typ = 1;
-			setImage(new Image("de/bundesbank/snake/gui/brokkoli.png"));
+			setImage(new Image("de/recondita/snake/gui/brokkoli.png"));
 		} else {
 			wert = 2;
 			typ = 1;
-			setImage(new Image("de/bundesbank/snake/gui/bratwurst.png"));
+			setImage(new Image("de/recondita/snake/gui/bratwurst.png"));
 		}
 		p.getChildren().add(this);
 		xProperty().bind(p.widthProperty().divide(main.getX()).multiply(x).subtract(fitWidthProperty().divide(2)));

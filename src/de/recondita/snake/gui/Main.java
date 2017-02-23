@@ -1,4 +1,4 @@
-package de.bundesbank.snake.gui;
+package de.recondita.snake.gui;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -50,7 +50,7 @@ public class Main extends Application {
 		// stage.setMaximized(true);
 		stage.setScene(scene);
 		stage.setTitle("Super Snake2");
-		background.setBackground(new Background(new BackgroundImage(new Image("de/bundesbank/snake/gui/boden.jpg"),
+		background.setBackground(new Background(new BackgroundImage(new Image("de/recondita/snake/gui/boden.jpg"),
 				BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
 		schlange = new Schlange(background, this);
 
@@ -105,7 +105,7 @@ public class Main extends Application {
 					if (!timer.getStatus().equals(Status.PAUSED)) {
 						timer.pause();
 						background.getChildren().add(menu);
-						pause.setText("Spiel pausiert, \n Länge: " + schlange.getLaenge());
+						pause.setText("Spiel pausiert, \n LÃ¤nge: " + schlange.getLaenge());
 					} else {
 						background.getChildren().remove(menu);
 						timer.play();
@@ -122,7 +122,7 @@ public class Main extends Application {
 		menu.prefHeightProperty().bind(background.heightProperty());
 		// menu.setStyle("-fx-background-color: green");
 		menu.setBackground(new Background(
-				new BackgroundImage(new Image("de/bundesbank/snake/gui/schlange.png"), BackgroundRepeat.NO_REPEAT,
+				new BackgroundImage(new Image("de/recondita/snake/gui/schlange.png"), BackgroundRepeat.NO_REPEAT,
 						BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
 		pause.setStyle("-fx-text-fill: red; -fx-text-size: 36;");
 		pause.setFont(Font.font("Cambria", 32));
@@ -155,7 +155,7 @@ public class Main extends Application {
 	public void verloren() {
 		timer.stop();
 		background.getChildren().removeAll();
-		pause.setText("Verloren, Länge: " + schlange.getLaenge());
+		pause.setText("Verloren, LÃ¤nge: " + schlange.getLaenge());
 		background.getChildren().add(menu);
 	}
 

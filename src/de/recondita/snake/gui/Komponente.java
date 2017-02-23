@@ -1,4 +1,4 @@
-package de.bundesbank.snake.gui;
+package de.recondita.snake.gui;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;

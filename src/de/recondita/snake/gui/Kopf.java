@@ -1,4 +1,4 @@
-package de.bundesbank.snake.gui;
+package de.recondita.snake.gui;
 
 import java.util.ArrayList;
 
@@ -11,7 +11,7 @@ public class Kopf extends Komponente {
 	private Schlange schlange;
 
 	public Kopf(Pane p, Main main, Schlange schlange) {
-		super("de/bundesbank/snake/gui/kopf.png", p, main, new Schwanz(p, main));
+		super("de/recondita/snake/gui/kopf.png", p, main, new Schwanz(p, main));
 		getNachher().setzePosition((int) getPositionX(), (int) getPositionY() + 1);
 		this.main = main;
 		this.p = p;

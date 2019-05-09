@@ -18,6 +18,19 @@ public class Kopf extends Komponente {
 		this.schlange = schlange;
 	}
 
+	public void reset() {
+		setzePosition((int) (main.getX() / 2), (int) (main.getY() / 2));
+		Komponente last;
+		for (last = getNachher(); last.getNachher() != null; last = last.getNachher()) {
+			last.remove();
+		}
+		
+		setNachher(last);
+		getNachher().setzePosition((int) getPositionX(), (int) getPositionY() + 1);
+		resetRotate();
+		getNachher().resetRotate();
+	}
+
 	@Override
 	public void bewege(double x, double y) {
 		super.bewege(x, y);
@@ -28,7 +41,7 @@ public class Kopf extends Komponente {
 			main.verloren();
 		}
 		ArrayList<Apfel> temp = new ArrayList<Apfel>();
-		for (Apfel a : main.getApfel()) {
+		for (Apfel a : main.getItem()) {
 			if ((int) Math.round(x) == a.getPositionX() && (int) Math.round(y) == a.getPositionY()) {
 				temp.add(a);
 				for (int i = 0; i < (a.getWert() == -1 ? schlange.getLaenge() / 4 : a.getWert()); i++) {
@@ -42,7 +55,7 @@ public class Kopf extends Komponente {
 	}
 
 	public void verlaengern() {
-		int temp=getNachher().getNextRotation();
+		int temp = getNachher().getNextRotation();
 		setNachher(new Mittelstueck(p, main, getNachher()));
 		getNachher().setRotation(temp);
 		p.getChildren().add(getNachher());

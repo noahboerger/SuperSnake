@@ -11,9 +11,12 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
@@ -37,6 +40,7 @@ public class Main extends Application {
 	private int nextRotation = 0;
 	private boolean betrunken;
 	private BorderPane menu = new BorderPane();
+	private Button restart = new Button("Restart");
 	private Label pause = new Label();
 
 	public static void main(String[] args) {
@@ -47,11 +51,11 @@ public class Main extends Application {
 	public void start(Stage stage) throws Exception {
 		Scene scene = new Scene(background, 1320, 700);
 
-		// stage.setMaximized(true);
 		stage.setScene(scene);
 		stage.setTitle("Super Snake2");
-		background.setBackground(new Background(new BackgroundImage(new Image("de/recondita/snake/gui/boden.jpg"),
-				BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
+		background.setBackground(new Background(
+				new BackgroundImage(new Image("de/recondita/snake/gui/boden.jpg"), BackgroundRepeat.REPEAT,
+						BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
 		schlange = new Schlange(background, this);
 
 		timer = new Timeline(new KeyFrame(Duration.millis(Main.GESCHWINDIGKEIT), new EventHandler<ActionEvent>() {
@@ -99,7 +103,7 @@ public class Main extends Application {
 					}
 					break;
 				case R:
-					resetApfel();
+					resetItems();
 					break;
 				case P:
 					if (!timer.getStatus().equals(Status.PAUSED)) {
@@ -126,6 +130,10 @@ public class Main extends Application {
 						BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
 		pause.setStyle("-fx-text-fill: red; -fx-text-size: 36;");
 		pause.setFont(Font.font("Cambria", 32));
+		restart.setStyle(
+				"-fx-background-color: #090a0c, linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%), linear-gradient(#20262b, #191d22), radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));  -fx-background-radius: 5,4,3,5; -fx-background-insets: 0,1,2,0;  -fx-text-fill: white;");
+		restart.setLayoutX(((background.getWidth() - restart.getWidth()) / 2) - 20);
+		restart.setLayoutY(((background.getHeight() - restart.getHeight()) / 2) + 30);
 	}
 
 	public boolean isBetrunken() {
@@ -155,11 +163,30 @@ public class Main extends Application {
 	public void verloren() {
 		timer.stop();
 		background.getChildren().removeAll();
-		pause.setText("Verloren, LÃ¤nge: " + schlange.getLaenge());
+		pause.setText("Verloren, Länge: " + schlange.getLaenge());
 		background.getChildren().add(menu);
+		restart.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent event) {
+				if (event.getButton() == MouseButton.PRIMARY) {
+					restartGame();
+				}
+			}
+		});
+		background.getChildren().add(restart);
 	}
 
-	public List<Apfel> getApfel() {
+	private void restartGame() {
+		resetItems();
+		schlange.reset();
+		nextRotation = 0;
+		timer.play();
+		background.getChildren().remove(menu);
+		background.getChildren().remove(restart);
+	}
+
+	public List<Apfel> getItem() {
 		return apfel;
 	}
 
@@ -167,7 +194,7 @@ public class Main extends Application {
 		return timer;
 	}
 
-	private void resetApfel() {
+	private void resetItems() {
 		ArrayList<Apfel> temp = new ArrayList<Apfel>();
 		for (Apfel a : apfel) {
 			temp.add(a);

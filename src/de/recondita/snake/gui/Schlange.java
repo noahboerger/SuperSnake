@@ -14,6 +14,10 @@ public class Schlange {
 	public void setRotation(int r) {
 		kopf.setRotation(r);
 	}
+	
+	public void reset() {
+		kopf.reset();
+	}
 
 	public void schritt() {
 		double x = kopf.getPositionX();

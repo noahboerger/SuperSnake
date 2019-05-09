@@ -23,10 +23,13 @@ public abstract class Komponente extends ImageView {
 	private int rotate = 0;
 	private Komponente nachher;
 	private int nextRotation = 0;
+	
+	private Pane p;
 
 	public Komponente(String pfad, Pane p, Main main, Komponente nachher) {
 		super(new Image(pfad));
 		this.nachher = nachher;
+		this.p = p;
 		setCache(true);
 		//this.main = main;
 		xProperty().bind(p.widthProperty().divide(main.getX()).multiply(x).subtract(fitWidthProperty().divide(2)));
@@ -54,6 +57,10 @@ public abstract class Komponente extends ImageView {
 				}
 			});
 		}
+	}
+	
+	public void remove() {
+		p.getChildren().remove(this);
 	}
 
 	public void setRotation(int r) {
@@ -105,6 +112,12 @@ public abstract class Komponente extends ImageView {
 
 	public int getRichtung() {
 		return rotate;
+	}
+	
+	public void resetRotate() {
+		rotate = 0;
+		setRotate(0);
+		nextRotation = 0;
 	}
 
 	public void setNextRotation(int rotation) {

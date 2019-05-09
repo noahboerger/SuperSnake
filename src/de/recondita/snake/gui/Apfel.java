@@ -1,5 +1,6 @@
 package de.recondita.snake.gui;
 
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import javafx.animation.KeyFrame;
@@ -9,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.effect.Bloom;
 import javafx.scene.effect.BoxBlur;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -29,10 +31,14 @@ public class Apfel extends ImageView {
 		this.p = p;
 		this.main = main;
 		wert = (int) (Math.random() * 1000);
-		if (wert < 700) {
+		if (wert < 600) {
 			wert = 1;
 			typ = 1;
 			setImage(new Image("de/recondita/snake/gui/apfel.png"));
+		} else if (wert < 700) {
+			wert = 1;
+			typ = 5;
+			setImage(new Image("de/recondita/snake/gui/rainbow.png"));
 		} else if (wert < 720) {
 			wert = -1;
 			typ = 1;
@@ -82,7 +88,7 @@ public class Apfel extends ImageView {
 
 	public void iss() {
 		p.getChildren().remove(this);
-		main.getApfel().remove(this);
+		main.getItem().remove(this);
 		if (typ == 2) {
 			main.setBetrunken(true);
 			BoxBlur bb = new BoxBlur();
@@ -112,7 +118,7 @@ public class Apfel extends ImageView {
 			}
 		} else if (typ == 4) {
 			ArrayList<Apfel> temp = new ArrayList<Apfel>();
-			for (Apfel a : main.getApfel()) {
+			for (Apfel a : main.getItem()) {
 				if (a instanceof SonderApfel) {
 					temp.add(a);
 				}
@@ -123,8 +129,9 @@ public class Apfel extends ImageView {
 			Bloom bloom = new Bloom();
 			p.setEffect(bloom);
 			Timeline timeline = new Timeline();
-			timeline.getKeyFrames().addAll(new KeyFrame(Duration.millis(0), new KeyValue(bloom.thresholdProperty(), 1.0)),
-					new KeyFrame(Duration.millis(Main.GESCHWINDIGKEIT * 50), new KeyValue(bloom.thresholdProperty(), 0.01)));
+			timeline.getKeyFrames().addAll(
+					new KeyFrame(Duration.millis(0), new KeyValue(bloom.thresholdProperty(), 1.0)), new KeyFrame(
+							Duration.millis(Main.GESCHWINDIGKEIT * 50), new KeyValue(bloom.thresholdProperty(), 0.01)));
 			timeline.setAutoReverse(true);
 			timeline.setCycleCount(2);
 			timeline.play();
@@ -135,6 +142,24 @@ public class Apfel extends ImageView {
 					p.setEffect(null);
 				}
 			});
+		} else if (typ == 5) {
+			 ColorAdjust colorAdjust = new ColorAdjust();
+			 p.setEffect(colorAdjust);
+			 
+			 Timeline timeline = new Timeline();
+			 timeline.setCycleCount(5);
+			 timeline.setAutoReverse(true);
+			 timeline.getKeyFrames().add(new KeyFrame(Duration.millis(1500), new KeyValue(colorAdjust.hueProperty(), 1)));
+			 timeline.setOnFinished(new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent arg0) {
+					p.setEffect(null);
+				}
+			});
+			 timeline.play();
+			 
+			 
 		}
 		neu();
 	}
